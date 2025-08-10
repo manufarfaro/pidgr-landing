@@ -284,6 +284,16 @@
             .status::after {
                 right: -60px;
             }
+
+            .footer {
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                text-align: center;
+                bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+                padding: 0 1rem;
+            }
         }
 
         @media (max-width: 480px) {
