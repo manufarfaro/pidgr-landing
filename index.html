@@ -25,6 +25,32 @@
             box-sizing: border-box;
         }
 
+        :root { -webkit-tap-highlight-color: transparent; }
+
+        .skip-link {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            clip: rect(1px, 1px, 1px, 1px);
+            clip-path: inset(50%);
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .skip-link:focus {
+            clip: auto;
+            clip-path: none;
+            height: auto;
+            width: auto;
+        }
+
         html, body {
             height: 100%;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -49,6 +75,8 @@
             height: 100%;
             overflow: hidden;
             z-index: 1;
+            isolation: isolate;
+            contain: paint;
         }
 
         .forward-flow {
@@ -56,13 +84,7 @@
             inset: 0;
             z-index: 2;
             pointer-events: none;
-            opacity: 0.06;
-            mix-blend-mode: soft-light;
-            background-image:
-                repeating-linear-gradient(-12deg, rgba(255, 255, 255, 0.8) 0 1px, rgba(255, 255, 255, 0) 1px 110px);
-            background-size: 100% 100%;
-            filter: blur(0.3px);
-            animation: forwardFlow 40s linear infinite;
+            display: none;
         }
 
         @keyframes forwardFlow {
@@ -74,11 +96,14 @@
             position: absolute;
             width: 26px;
             height: 26px;
-            opacity: 0.14;
-            filter: invert(1) saturate(0) brightness(1.6) drop-shadow(0 2px 8px rgba(255, 255, 255, 0.06));
-            mix-blend-mode: soft-light;
-            will-change: transform, opacity;
-            transform: translateZ(0);
+            opacity: 0.18;
+            filter: invert(1) brightness(1.4);
+            mix-blend-mode: normal;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             pointer-events: none;
         }
 
@@ -148,6 +173,9 @@
             max-width: 600px;
             padding: 2rem;
         }
+
+        .container:focus,
+        .container:focus-visible { outline: none; box-shadow: none; }
 
         .logo {
             margin-bottom: 2rem;
@@ -306,44 +334,73 @@
                 display: none;
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .particles { display: none !important; }
+            .forward-flow { animation: none !important; }
+            .particle, .envelope { animation: none !important; }
+
+            .logo,
+            .brand,
+            .status,
+            .tagline,
+            .footer { opacity: 1 !important; animation: none !important; transform: none !important; }
+
+            .logo img { transition: none !important; }
+        }
+
+        :root[data-perf="low"] .forward-flow { display: none; }
+        :root[data-perf="low"] .envelope { filter: none; mix-blend-mode: normal; opacity: 0.12; }
     </style>
 </head>
 <body>
-    <div class="particles">
-        <img class="envelope" alt="Envelope" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="Envelope" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="Envelope" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="Envelope" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="Envelope" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+    <div class="particles" aria-hidden="true">
+        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
+        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
+        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
+        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
+        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
+        <div class="particle" aria-hidden="true"></div>
+        <div class="particle" aria-hidden="true"></div>
+        <div class="particle" aria-hidden="true"></div>
+        <div class="particle" aria-hidden="true"></div>
+        <div class="particle" aria-hidden="true"></div>
     </div>
 
     <div class="forward-flow" aria-hidden="true"></div>
 
-    <main class="container">
-        <section class="logo" aria-label="Pidgr logo">
-            <img src="assets/pidgr-logo-white.svg" alt="Pidgr Logo" />
+    <main id="main" class="container" tabindex="-1" role="main">
+        <section class="logo">
+            <img src="assets/pidgr-logo-white.svg" alt="" aria-hidden="true" />
         </section>
         
-        <article>
-            <h1 class="brand">Pidgr</h1>
-            <p class="status">COMING SOON</p>
+        <article aria-labelledby="brand-heading">
+            <h1 id="brand-heading" class="brand">Pidgr</h1>
+            <p class="status" role="status" aria-live="polite">COMING SOON</p>
             <p class="tagline">Transform Noise to Action</p>
         </article>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         © 2025 Pidgr. Building the future of internal communications.
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const skipEl = document.createElement('a');
+            skipEl.className = 'skip-link';
+            skipEl.href = '#main';
+            skipEl.textContent = 'Skip to main content';
+            document.body.insertBefore(skipEl, document.body.firstChild);
+        });
+
+        if (window.gsap && gsap.config) {
+            gsap.config({ force3D: true, nullTargetWarn: false });
+        }
+
         const ENVELOPE_SRC = 'https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg';
-        const MAX_ENVELOPES = 60;
-        const MAX_PARTICLES = 120;
+        let MAX_ENVELOPES = 28;
+        let MAX_PARTICLES = 60;
 
         function randomInRange(min, max) {
             return Math.random() * (max - min) + min;
@@ -360,11 +417,12 @@
             el.style.height = size + 'px';
             el.style.opacity = randomInRange(0.08, 0.18).toFixed(2);
 
-            const travelDuration = randomInRange(14, 22);
-            const bobAmplitude = randomInRange(10, 28);
-            const bobDuration = randomInRange(2.2, 3.8);
-            const rotAmount = randomInRange(6, 12) * (Math.random() > 0.5 ? 1 : -1);
+            const travelDuration = randomInRange(16, 24);
+            const bobAmplitude = randomInRange(6, 16);
+            const bobDuration = randomInRange(2.6, 4.2);
+            const rotAmount = 0;
 
+            gsap.set(el, { willChange: 'transform' });
             gsap.to(el, {
                 x: -(window.innerWidth + 600),
                 ease: 'sine.inOut',
@@ -408,7 +466,8 @@
             prune('.envelope', MAX_ENVELOPES);
             const img = document.createElement('img');
             img.className = 'envelope';
-            img.alt = 'Envelope';
+            img.alt = '';
+            img.setAttribute('aria-hidden', 'true');
             img.src = ENVELOPE_SRC;
             container.appendChild(img);
             animateEnvelope(img);
@@ -435,9 +494,9 @@
         function startSpawning() {
             if (spawnIntervalId != null) return;
             spawnIntervalId = setInterval(() => {
-                const batch = Math.random() > 0.6 ? 2 : 1;
+                const batch = 1;
                 for (let i = 0; i < batch; i++) setTimeout(spawnEnvelope, i * 600);
-            }, 4000);
+            }, 5200);
         }
 
         function stopSpawning() {
@@ -447,7 +506,11 @@
             }
         }
 
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (prefersReducedMotion.matches) return;
+            // Low-performance is default; forward-flow disabled via CSS; reduced counts already set
+
             document.querySelectorAll('.envelope').forEach(animateEnvelope);
             for (let i = 0; i < 6; i++) setTimeout(spawnEnvelope, i * 900);
             startSpawning();
