@@ -349,8 +349,7 @@
             .logo img { transition: none !important; }
         }
 
-        :root[data-perf="low"] .forward-flow { display: none; }
-        :root[data-perf="low"] .envelope { filter: none; mix-blend-mode: normal; opacity: 0.12; }
+        
     </style>
 </head>
 <body>
@@ -509,7 +508,6 @@
         window.addEventListener('load', async () => {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             if (prefersReducedMotion.matches) return;
-            // Low-performance is default; forward-flow disabled via CSS; reduced counts already set
 
             document.querySelectorAll('.envelope').forEach(animateEnvelope);
             for (let i = 0; i < 6; i++) setTimeout(spawnEnvelope, i * 900);
