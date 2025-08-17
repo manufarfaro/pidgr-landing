@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="preload" as="image" href="assets/pidgr-logo-white.svg">
+    <link rel="preload" as="image" href="assets/mail.svg">
     <script>
         window.va = window.va || function () {
             (window.vaq = window.vaq || []).push(arguments);
@@ -354,11 +356,11 @@
 </head>
 <body>
     <div class="particles" aria-hidden="true">
-        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
-        <img class="envelope" alt="" aria-hidden="true" src="https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg" />
+        <img class="envelope" alt="" aria-hidden="true" src="assets/mail.svg" decoding="async" loading="lazy" />
+        <img class="envelope" alt="" aria-hidden="true" src="assets/mail.svg" decoding="async" loading="lazy" />
+        <img class="envelope" alt="" aria-hidden="true" src="assets/mail.svg" decoding="async" loading="lazy" />
+        <img class="envelope" alt="" aria-hidden="true" src="assets/mail.svg" decoding="async" loading="lazy" />
+        <img class="envelope" alt="" aria-hidden="true" src="assets/mail.svg" decoding="async" loading="lazy" />
         <div class="particle" aria-hidden="true"></div>
         <div class="particle" aria-hidden="true"></div>
         <div class="particle" aria-hidden="true"></div>
@@ -370,7 +372,7 @@
 
     <main id="main" class="container" tabindex="-1" role="main">
         <section class="logo">
-            <img src="assets/pidgr-logo-white.svg" alt="" aria-hidden="true" />
+            <img src="assets/pidgr-logo-white.svg" alt="" aria-hidden="true" decoding="async" />
         </section>
         
         <article aria-labelledby="brand-heading">
@@ -397,7 +399,7 @@
             gsap.config({ force3D: true, nullTargetWarn: false });
         }
 
-        const ENVELOPE_SRC = 'https://cdn.jsdelivr.net/npm/lucide-static@0.447.0/icons/mail.svg';
+        const ENVELOPE_SRC = 'assets/mail.svg';
         let MAX_ENVELOPES = 28;
         let MAX_PARTICLES = 60;
 
@@ -468,6 +470,8 @@
             img.alt = '';
             img.setAttribute('aria-hidden', 'true');
             img.src = ENVELOPE_SRC;
+            img.decoding = 'async';
+            img.loading = 'lazy';
             container.appendChild(img);
             animateEnvelope(img);
         }
